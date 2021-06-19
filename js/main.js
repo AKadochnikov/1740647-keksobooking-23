@@ -1,6 +1,4 @@
-import {createAdvertisement} from './create-advertisement.js';
-
-
-const similarAdvertisement = new Array(8).fill(null).map(() => createAdvertisement());
+import {similarAdvertisement} from './create-advertisement.js';
+import './generator-for-card.js';
 
 
