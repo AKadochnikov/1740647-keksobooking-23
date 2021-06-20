@@ -53,7 +53,7 @@ const createAdvertisement = () => ({
     avatar: `img/avatars/user${ createCurrentElement(NUMBERS_FOR_URL, getRandomPositiveInteger(0, NUMBERS_FOR_URL.length - 1)) }.png`,
   },
   offer: {
-    title:  TITLES[getRandomPositiveInteger(0, TITLES.length - 1)],
+    title: TITLES[getRandomPositiveInteger(0, TITLES.length - 1)],
     address: `${getRandomPositiveFloat(LAT_MIN, LAT_MAX, DIGIT)}.x ${getRandomPositiveFloat(LNG_MIN, LNG_MAX, DIGIT)}.y`,
     price: getRandomPositiveInteger(1, 40000),
     type: TYPES[getRandomPositiveInteger(0, TYPES.length - 1)],

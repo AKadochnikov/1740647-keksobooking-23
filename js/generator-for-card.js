@@ -3,6 +3,8 @@ import {similarAdvertisement} from './create-advertisement.js';
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 const similarAdvertisements = similarAdvertisement();
 const similarListFragment = document.createDocumentFragment();
+const cardList = document.querySelector('#map-canvas');
+const POSITION_FEATURE = 7;
 
 const getNewOfferType = (type) => {
   let newType;
@@ -55,25 +57,47 @@ const getPhotosCollection = (photos) => {
   return fragment;
 };
 
+const checkContent = (elements) => {
+  if (elements.textContent === '') {
+    elements.classList.add('hidden');
+  }
+  return elements;
+};
+
 
 similarAdvertisements.forEach((advertisement) => {
   const advertisementElement = popupTemplate.cloneNode(true);
   const photoContainer = advertisementElement.querySelector('.popup__photos');
-  advertisementElement.querySelector('.popup__title').textContent = advertisement.offer.title;
-  advertisementElement.querySelector('.popup__text--address').textContent = advertisement.offer.address;
-  advertisementElement.querySelector('.popup__text--price').innerHTML = `${advertisement.offer.price} <span>₽/ночь</span>`;
-  advertisementElement.querySelector('.popup__type').textContent = getNewOfferType(advertisement.offer.type);
-  advertisementElement.querySelector('.popup__text--capacity').textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
-  advertisementElement.querySelector('.popup__text--time').textContent = `Заезд после ${advertisement.offer.checkIn}, выезд до ${advertisement.offer.checkOut}`;
-  advertisementElement.querySelector('.popup__features').textContent = '';
-  advertisementElement.querySelector('.popup__features').appendChild(getFeatureCollection(advertisement.offer.features));
-  advertisementElement.querySelector('.popup__description').textContent = advertisement.offer.description;
+  const popupTittle = advertisementElement.querySelector('.popup__title');
+  const popupTextAddress = advertisementElement.querySelector('.popup__text--address');
+  const popupTextPrice = advertisementElement.querySelector('.popup__text--price');
+  const popupType = advertisementElement.querySelector('.popup__type');
+  const popupTextCapacity = advertisementElement.querySelector('.popup__text--capacity');
+  const popupTextTime = advertisementElement.querySelector('.popup__text--time');
+  const popupFeatures = advertisementElement.querySelector('.popup__features');
+  const popupDescription = advertisementElement.querySelector('.popup__description');
+  const popupAvatar = advertisementElement.querySelector('.popup__avatar');
+  popupTittle.textContent = advertisement.offer.title;
+  popupTextAddress.textContent = advertisement.offer.address;
+  popupTextPrice.innerHTML = `${advertisement.offer.price} <span>₽/ночь</span>`;
+  popupType.textContent = getNewOfferType(advertisement.offer.type);
+  popupTextCapacity.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
+  popupTextTime.textContent = `Заезд после ${advertisement.offer.checkIn}, выезд до ${advertisement.offer.checkOut}`;
+  popupFeatures.remove();
+  const newFeatureList = advertisementElement.children[POSITION_FEATURE];
+  newFeatureList.insertAdjacentElement('beforebegin', getFeatureCollection(advertisement.offer.features));
+  popupDescription.textContent = advertisement.offer.description;
   photoContainer.textContent = '';
   photoContainer.appendChild(getPhotosCollection(advertisement.offer.photos));
+  popupAvatar.src = advertisement.author.avatar;
+  checkContent(popupTittle);
+  checkContent(popupTextAddress);
+  checkContent(popupTextPrice);
+  checkContent(popupType);
+  checkContent(popupTextCapacity);
+  checkContent(popupTextTime);
+  checkContent(popupDescription);
   similarListFragment.appendChild(advertisementElement);
-
 });
-const cardList = document.querySelector('main');
-cardList.appendChild(similarListFragment);
 
-
+cardList.appendChild(similarListFragment.children[0]);
