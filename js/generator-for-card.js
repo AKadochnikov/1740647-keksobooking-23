@@ -65,7 +65,7 @@ const checkContent = (elements) => {
 };
 
 
-similarAdvertisements.forEach((advertisement) => {
+const getGeneratedCard = (item) => item.forEach((advertisement) => {
   const advertisementElement = popupTemplate.cloneNode(true);
   const photoContainer = advertisementElement.querySelector('.popup__photos');
   const popupTittle = advertisementElement.querySelector('.popup__title');
@@ -98,6 +98,7 @@ similarAdvertisements.forEach((advertisement) => {
   checkContent(popupTextTime);
   checkContent(popupDescription);
   similarListFragment.appendChild(advertisementElement);
+  return similarListFragment;
 });
-
-cardList.appendChild(similarListFragment.children[0]);
+getGeneratedCard(similarAdvertisements);
+cardList.appendChild(similarListFragment.firstChild);
