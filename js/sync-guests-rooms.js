@@ -1,25 +1,12 @@
+import {setAttributeDisabled, removeAttributeDisabled} from './utils/change-attribute-disabled.js';
+import {setAttributeSelected, removeAttributeSelected} from './utils/change-attribute-selected.js';
+
 const rooms = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 const CAPACITY_FOR_3_GUESTS = capacity[0];
 const CAPACITY_FOR_2_GUESTS = capacity[1];
 const CAPACITY_FOR_1_GUEST = capacity[2];
 const NOT_FOR_GUESTS = capacity[3];
-
-const setAttributeDisabled = (item) => {
-  item.setAttribute('disabled', 'disabled');
-  return item;
-};
-const setAttributeSelected = (item) => {
-  item.setAttribute('selected', 'selected');
-  return item;
-};
-const removeAttributeDisabled = (item) => {
-  item.removeAttribute('disabled', 'disabled');
-  return item;
-};
-const removeAttributeSelected = (item) => {
-  item.removeAttribute('selected', 'selected');
-};
 
 const synchronizeRoomsCapacity = (item) => item.addEventListener('change', () => {
   switch (rooms.value){
@@ -80,4 +67,3 @@ setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
 setAttributeDisabled(NOT_FOR_GUESTS);
 synchronizeRoomsCapacity(rooms);
 
-export {setAttributeDisabled, removeAttributeDisabled};

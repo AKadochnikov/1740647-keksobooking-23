@@ -1,14 +1,35 @@
-import {setAttributeDisabled, removeAttributeDisabled} from './sync-guests-rooms.js';
+import {setAttributeDisabled, removeAttributeDisabled} from './utils/change-attribute-disabled.js';
+
+const AD_FORM_CLASS_DISABLED = 'ad-form--disabled';
+const MAP_FILTERS_CLASS_DISABLED = 'map__filters--disabled';
 
 const adForm = document.querySelector('.ad-form');
 const formChildren = adForm.querySelectorAll('fieldset');
-console.log(formChildren.parentNode);
+const mapFilters = document.querySelector('.map__filters');
+const mapFiltersChildren = mapFilters.querySelectorAll('.map__filter');
+const mapFiltersFeatures = mapFilters.querySelector('.map__features');
 
-const deactivateForm = (form, itemsForm ) => {
-  form
+const deactivateForm = (form, itemsForm, classDisabled, mapFeatures) => {
+  form.classList.add(classDisabled);
   itemsForm.forEach((item) => {
     setAttributeDisabled(item);
-    return itemsForm;
   });
+  if (mapFeatures) {
+    setAttributeDisabled(mapFeatures);
+  }
 };
-deactivateForm(formChildren);
+
+const activateForm = (form, itemsForm, classDisabled, mapFeatures) => {
+  form.classList.remove(classDisabled);
+  itemsForm.forEach((item) => {
+    removeAttributeDisabled(item);
+  });
+  if (mapFeatures) {
+    removeAttributeDisabled(mapFeatures);
+  }
+};
+
+deactivateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
+activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
+deactivateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
+activateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
