@@ -40,7 +40,6 @@ const checkValidation = (item) => {
       }
     } else if (item['type'] === 'text') {
       const valueLength = item.value.length;
-
       if (valueLength < minValue) {
         item.setCustomValidity(`Ещё ${ minValue - valueLength } симв.`);
       } else if (valueLength > maxValue) {
