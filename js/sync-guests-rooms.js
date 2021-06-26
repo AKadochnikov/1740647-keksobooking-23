@@ -59,6 +59,7 @@ const synchronizeRoomsCapacity = (item) => item.addEventListener('change', () =>
       removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
       removeAttributeDisabled(CAPACITY_FOR_2_GUESTS);
       removeAttributeDisabled(NOT_FOR_GUESTS);
+      break;
   }
   return item;
 });

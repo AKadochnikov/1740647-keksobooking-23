@@ -1,7 +1,9 @@
+import {price} from './type-of-housing.js';
 import './sync-guests-rooms.js';
 import './sync-timein-timeout.js';
+import './type-of-housing.js';
+
 const title = document.querySelector('#title');
-const price = document.querySelector('#price');
 
 const getMinValue = (item) => {
   let minValue;
@@ -25,15 +27,14 @@ const getMaxValue = (item) => {
 
 
 const checkValidation = (item) => {
-  const minValue = getMinValue(item);
-  const maxValue = getMaxValue(item);
-
   item.addEventListener('input', () => {
+    const minValue = getMinValue(item);
+    const maxValue = getMaxValue(item);
     if (item['type'] === 'number') {
       const value = Number(item.value);
 
       if (value < minValue) {
-        item.setCustomValidity('Минимальное значение 0');
+        item.setCustomValidity(`Минимальное значение ${minValue}`);
       } else if (value > maxValue) {
         item.setCustomValidity('Максимальное значение 1 000 000');
       } else {
