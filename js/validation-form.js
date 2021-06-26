@@ -1,4 +1,5 @@
 import './sync-guests-rooms.js';
+import './sync-timein-timeout.js';
 const title = document.querySelector('#title');
 const price = document.querySelector('#price');
 
