@@ -3,7 +3,7 @@ import {similarAdvertisement} from './create-advertisement.js';
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 const similarAdvertisements = similarAdvertisement();
 const similarListFragment = document.createDocumentFragment();
-const cardList = document.querySelector('#map-canvas');
+const mapCanvas = document.querySelector('#map-canvas');
 const POSITION_FEATURE = 7;
 
 const getNewOfferType = (type) => {
@@ -101,4 +101,4 @@ const getGeneratedCard = (item) => item.forEach((advertisement) => {
   return similarListFragment;
 });
 getGeneratedCard(similarAdvertisements);
-cardList.appendChild(similarListFragment.firstChild);
+

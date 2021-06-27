@@ -30,6 +30,6 @@ const activateForm = (form, itemsForm, classDisabled, mapFeatures) => {
 };
 
 deactivateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
-activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
 deactivateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
-activateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
+
+export {activateForm, adForm, formChildren, AD_FORM_CLASS_DISABLED, mapFilters, mapFiltersChildren, mapFiltersFeatures, MAP_FILTERS_CLASS_DISABLED};

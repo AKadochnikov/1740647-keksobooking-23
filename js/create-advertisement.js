@@ -73,4 +73,4 @@ const createAdvertisement = () => ({
 
 const similarAdvertisement = () => new Array(8).fill(null).map(() => createAdvertisement());
 
-export {similarAdvertisement};
+export {similarAdvertisement, DIGIT};
