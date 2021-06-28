@@ -2,8 +2,6 @@ import {similarAdvertisement} from './create-advertisement.js';
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 const similarAdvertisements = similarAdvertisement();
-const similarListFragment = document.createDocumentFragment();
-const mapCanvas = document.querySelector('#map-canvas');
 const POSITION_FEATURE = 7;
 
 const getNewOfferType = (type) => {
@@ -64,8 +62,7 @@ const checkContent = (elements) => {
   return elements;
 };
 
-
-const getGeneratedCard = (item) => item.forEach((advertisement) => {
+const getGeneratedCard = (advertisement) => {
   const advertisementElement = popupTemplate.cloneNode(true);
   const photoContainer = advertisementElement.querySelector('.popup__photos');
   const popupTittle = advertisementElement.querySelector('.popup__title');
@@ -97,8 +94,8 @@ const getGeneratedCard = (item) => item.forEach((advertisement) => {
   checkContent(popupTextCapacity);
   checkContent(popupTextTime);
   checkContent(popupDescription);
-  similarListFragment.appendChild(advertisementElement);
-  return similarListFragment;
-});
-getGeneratedCard(similarAdvertisements);
+  return advertisementElement;
+};
+
+export {getGeneratedCard, similarAdvertisements};
 
