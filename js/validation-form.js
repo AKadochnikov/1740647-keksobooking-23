@@ -3,6 +3,7 @@ import './sync-guests-rooms.js';
 import './sync-timein-timeout.js';
 import './type-of-housing.js';
 
+
 const title = document.querySelector('#title');
 
 const getMinValue = (item) => {

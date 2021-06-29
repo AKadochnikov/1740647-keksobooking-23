@@ -54,7 +54,7 @@ const createAdvertisement = () => ({
   },
   offer: {
     title: TITLES[getRandomPositiveInteger(0, TITLES.length - 1)],
-    address: `${getRandomPositiveFloat(LAT_MIN, LAT_MAX, DIGIT)}.x ${getRandomPositiveFloat(LNG_MIN, LNG_MAX, DIGIT)}.y`,
+    address: `${getRandomPositiveFloat(LAT_MIN, LAT_MAX, DIGIT)}, ${getRandomPositiveFloat(LNG_MIN, LNG_MAX, DIGIT)}`,
     price: getRandomPositiveInteger(1, 40000),
     type: TYPES[getRandomPositiveInteger(0, TYPES.length - 1)],
     rooms: getRandomPositiveInteger(1, 5),
@@ -73,4 +73,4 @@ const createAdvertisement = () => ({
 
 const similarAdvertisement = () => new Array(8).fill(null).map(() => createAdvertisement());
 
-export {similarAdvertisement};
+export {similarAdvertisement, DIGIT};
