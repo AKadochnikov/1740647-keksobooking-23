@@ -3,7 +3,7 @@ import {similarAdvertisement} from './create-advertisement.js';
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 const similarAdvertisements = similarAdvertisement();
 const POSITION_FEATURE = 7;
-
+//test
 const getNewOfferType = (type) => {
   let newType;
   switch (type) {
