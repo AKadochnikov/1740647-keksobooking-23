@@ -1,5 +1,6 @@
 import {TOKYO_LAT, TOKYO_LNG, map} from './map.js';
-import {DIGIT} from './create-advertisement.js';
+
+const DIGIT = 5;
 
 const inputAddress = document.querySelector('#address');
 

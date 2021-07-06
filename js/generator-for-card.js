@@ -1,7 +1,4 @@
-import {similarAdvertisement} from './create-advertisement.js';
-
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
-const similarAdvertisements = similarAdvertisement();
 const POSITION_FEATURE = 7;
 
 const getNewOfferType = (type) => {
@@ -31,27 +28,34 @@ const getNewOfferType = (type) => {
 const getFeatureCollection = (features) => {
   const element = popupTemplate.cloneNode(true);
   const featureListElement = element.querySelector('.popup__features');
-  const modifiers = features.map((feature) => `popup__feature--${feature}`);
-  featureListElement.querySelectorAll('.popup__feature').forEach((item) => {
-    const featureSecondClass = 1;
-    const modifier = item.classList[featureSecondClass];
-    if (!modifiers.includes(modifier)) {
-      item.remove();
-    }
-  });
+  if (features) {
+    const modifiers = features.map((feature) => `popup__feature--${feature}`);
+    featureListElement.querySelectorAll('.popup__feature').forEach((item) => {
+      const featureSecondClass = 1;
+      const modifier = item.classList[featureSecondClass];
+      if (!modifiers.includes(modifier)) {
+        item.remove();
+      }
+    });
+  } else {
+    featureListElement.querySelectorAll('.popup__feature')
+      .forEach((item) => item.remove());
+  }
   return featureListElement;
 };
 
 const getPhotosCollection = (photos) => {
   const fragment = document.createDocumentFragment();
-  photos.forEach((photo) => {
-    const img = document.createElement('img');
-    img.setAttribute('src', photo);
-    img.setAttribute('width', '45');
-    img.setAttribute('height', '40');
-    img.setAttribute('alt', 'Фотография жилья');
-    fragment.appendChild(img);
-  });
+  if (photos) {
+    photos.forEach((photo) => {
+      const img = document.createElement('img');
+      img.setAttribute('src', photo);
+      img.setAttribute('width', '45');
+      img.setAttribute('height', '40');
+      img.setAttribute('alt', 'Фотография жилья');
+      fragment.appendChild(img);
+    });
+  }
   return fragment;
 };
 
@@ -79,7 +83,7 @@ const getGeneratedCard = (advertisement) => {
   popupTextPrice.innerHTML = `${advertisement.offer.price} <span>₽/ночь</span>`;
   popupType.textContent = getNewOfferType(advertisement.offer.type);
   popupTextCapacity.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
-  popupTextTime.textContent = `Заезд после ${advertisement.offer.checkIn}, выезд до ${advertisement.offer.checkOut}`;
+  popupTextTime.textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}`;
   popupFeatures.remove();
   const newFeatureList = advertisementElement.children[POSITION_FEATURE];
   newFeatureList.insertAdjacentElement('beforebegin', getFeatureCollection(advertisement.offer.features));
@@ -97,5 +101,5 @@ const getGeneratedCard = (advertisement) => {
   return advertisementElement;
 };
 
-export {getGeneratedCard, similarAdvertisements};
+export {getGeneratedCard};
 

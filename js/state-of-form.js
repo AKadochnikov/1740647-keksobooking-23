@@ -1,4 +1,5 @@
 import {setAttributeDisabled, removeAttributeDisabled} from './utils/change-attribute-disabled.js';
+import {showAlert} from './utils/show-alert';
 
 const AD_FORM_CLASS_DISABLED = 'ad-form--disabled';
 const MAP_FILTERS_CLASS_DISABLED = 'map__filters--disabled';
@@ -27,6 +28,18 @@ const activateForm = (form, itemsForm, classDisabled, mapFeatures) => {
   if (mapFeatures) {
     removeAttributeDisabled(mapFeatures);
   }
+};
+
+const setUserFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      new FormData(evt.target),
+    );
+  });
 };
 
 deactivateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
