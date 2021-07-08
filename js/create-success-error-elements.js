@@ -8,41 +8,41 @@ const errorElement = errorTemplate.cloneNode(true);
 const closeElementSuccess = (keydownFunction, clickFunction) => {
   document.body.removeChild(successElement);
   document.removeEventListener('keydown', keydownFunction);
-  document.removeEventListener('click', clickFunction);
+  successElement.removeEventListener('click', clickFunction);
 };
 const closeElementError = (keydownFunction, clickFunction) => {
   document.body.removeChild(errorElement);
   document.removeEventListener('keydown', keydownFunction);
-  document.removeEventListener('click', clickFunction);
+  errorElement.removeEventListener('click', clickFunction);
 };
+
+const onSuccessClick = (keydownFunction, clickFunction) => closeElementSuccess(keydownFunction, clickFunction);
+const onErrorClick = (keydownFunction, clickFunction) => closeElementError(keydownFunction, clickFunction);
 
 const onSuccessKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    return closeElementSuccess();
+    closeElementSuccess(onSuccessKeydown, onSuccessClick);
   }
 };
 
 const onErrorKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    return closeElementError();
+    closeElementError(onErrorKeydown, onErrorClick);
   }
 };
-
-const onSuccessClick = () => closeElementSuccess(onSuccessKeydown, onSuccessClick);
-const onErrorClick = () => closeElementError(onErrorKeydown, onErrorClick);
 
 const createSuccessElement = () => {
   document.body.appendChild(successElement);
   document.addEventListener('keydown', onSuccessKeydown);
-  document.addEventListener('click', onSuccessClick);
+  successElement.addEventListener('click', onSuccessClick);
 };
 
 const createErrorElement = () => {
   document.body.appendChild(errorElement);
   document.addEventListener('keydown', onErrorKeydown);
-  document.addEventListener('click', onErrorClick);
+  errorElement.addEventListener('click', onErrorClick);
 };
 
 export {createErrorElement, createSuccessElement};
