@@ -1,5 +1,4 @@
 import {setAttributeDisabled, removeAttributeDisabled} from './utils/change-attribute-disabled.js';
-import {showAlert} from './utils/show-alert.js';
 import {sendData} from './api.js';
 
 const AD_FORM_CLASS_DISABLED = 'ad-form--disabled';
@@ -31,13 +30,13 @@ const activateForm = (form, itemsForm, classDisabled, mapFeatures) => {
   }
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
       () => onSuccess(),
-      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      () => onFail(),
       new FormData(evt.target),
     );
   });
