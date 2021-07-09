@@ -1,4 +1,4 @@
-import {getGeneratedCard, similarAdvertisements} from './generator-for-card.js';
+import {getGeneratedCard} from './generator-for-card.js';
 import {map} from './map.js';
 
 const createAdvertisementMarker = (advertisements) => advertisements.forEach((advertisement) => {
@@ -26,4 +26,4 @@ const createAdvertisementMarker = (advertisements) => advertisements.forEach((ad
     );
 });
 
-createAdvertisementMarker(similarAdvertisements);
+export {createAdvertisementMarker};
