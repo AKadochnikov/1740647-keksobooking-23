@@ -1,4 +1,7 @@
-import {activateForm, adForm, formChildren, AD_FORM_CLASS_DISABLED, mapFilters, mapFiltersChildren, mapFiltersFeatures, MAP_FILTERS_CLASS_DISABLED} from './state-of-form.js';
+import {activateForm, adForm, formChildren, AD_FORM_CLASS_DISABLED} from './state-of-form.js';
+import {getData} from './api.js';
+import {createAdvertisementMarker} from './create-advertisement-marker.js';
+import {showAlert} from './utils/show-alert.js';
 
 const TOKYO_LAT = 35.65283;
 const TOKYO_LNG = 139.83947;
@@ -7,7 +10,9 @@ const map = L.map('map-canvas');
 const loadMap = () => {
   map.on('load', () => {
     activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
-    activateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
+    getData((advertisements) => {
+      createAdvertisementMarker(advertisements.slice(0, 10));
+    }, showAlert);
   }).setView({
     lat: TOKYO_LAT,
     lng: TOKYO_LNG,
