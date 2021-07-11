@@ -1,5 +1,11 @@
-import {activateForm, adForm, formChildren, AD_FORM_CLASS_DISABLED, mapFilters, mapFiltersChildren, mapFiltersFeatures, MAP_FILTERS_CLASS_DISABLED} from './state-of-form.js';
+import {activateForm, adForm, formChildren, AD_FORM_CLASS_DISABLED} from './state-of-form.js';
+import {getData} from './api.js';
+import {createAdvertisementMarker} from './create-advertisement-marker.js';
+import {showAlert} from './utils/show-alert.js';
+import {filterStateHandler} from './advertisement-filters.js';
+import {debounce} from './utils/debounce.js';
 
+const DELAY_TIME = 2000;
 const TOKYO_LAT = 35.65283;
 const TOKYO_LNG = 139.83947;
 const map = L.map('map-canvas');
@@ -7,7 +13,10 @@ const map = L.map('map-canvas');
 const loadMap = () => {
   map.on('load', () => {
     activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
-    activateForm(mapFilters, mapFiltersChildren, MAP_FILTERS_CLASS_DISABLED, mapFiltersFeatures);
+    getData((advertisements) => {
+      createAdvertisementMarker(advertisements);
+      filterStateHandler(debounce(() => createAdvertisementMarker(advertisements), DELAY_TIME));
+    }, showAlert);
   }).setView({
     lat: TOKYO_LAT,
     lng: TOKYO_LNG,
@@ -22,4 +31,6 @@ const loadMap = () => {
 
 loadMap();
 
-export {TOKYO_LAT, TOKYO_LNG, map};
+const markerGroup = L.layerGroup().addTo(map);
+
+export {TOKYO_LAT, TOKYO_LNG, map, markerGroup};
