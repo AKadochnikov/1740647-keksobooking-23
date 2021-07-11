@@ -3,7 +3,9 @@ import {getData} from './api.js';
 import {createAdvertisementMarker} from './create-advertisement-marker.js';
 import {showAlert} from './utils/show-alert.js';
 import {filterStateHandler} from './advertisement-filters.js';
+import {debounce} from './utils/debounce.js';
 
+const DELAY_TIME = 2000;
 const TOKYO_LAT = 35.65283;
 const TOKYO_LNG = 139.83947;
 const map = L.map('map-canvas');
@@ -13,7 +15,7 @@ const loadMap = () => {
     activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
     getData((advertisements) => {
       createAdvertisementMarker(advertisements);
-      filterStateHandler(() => createAdvertisementMarker(advertisements));
+      filterStateHandler(debounce(() => createAdvertisementMarker(advertisements), DELAY_TIME));
     }, showAlert);
   }).setView({
     lat: TOKYO_LAT,
