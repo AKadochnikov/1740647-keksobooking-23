@@ -5,5 +5,6 @@ import './map.js';
 import './create-main-marker.js';
 import {submitSuccessHandler} from './reset-form.js';
 import {createErrorElement} from './create-success-error-elements.js';
+import './advertisement-filters.js';
 
 setUserFormSubmit(submitSuccessHandler, createErrorElement);
