@@ -5,7 +5,7 @@ import {createSuccessElement} from './create-success-error-elements.js';
 
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-const resetForm = () => {
+const resetFormValues = () => {
   adForm.reset();
   mapFilters.reset();
   resetMainMarker();
@@ -16,14 +16,14 @@ const resetForm = () => {
 
 const submitSuccessHandler = () => {
   createSuccessElement();
-  resetForm();
+  resetFormValues();
 };
 
 const resetFormHandler = () => resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  resetForm();
+  resetFormValues();
 });
 
 resetFormHandler();
 
-export {resetForm, submitSuccessHandler};
+export {submitSuccessHandler};
