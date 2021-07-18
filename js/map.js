@@ -5,9 +5,10 @@ import {showAlert} from './utils/show-alert.js';
 import {filterStateHandler} from './advertisement-filters.js';
 import {debounce} from './utils/debounce.js';
 
-const DELAY_TIME = 2000;
+const DELAY_TIME = 1500;
 const TOKYO_LAT = 35.65283;
 const TOKYO_LNG = 139.83947;
+const MAP_ZOOM = 10;
 const map = L.map('map-canvas');
 
 const loadMap = () => {
@@ -20,7 +21,7 @@ const loadMap = () => {
   }).setView({
     lat: TOKYO_LAT,
     lng: TOKYO_LNG,
-  }, 10);
+  }, MAP_ZOOM);
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {

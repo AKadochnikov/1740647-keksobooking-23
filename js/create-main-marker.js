@@ -1,13 +1,14 @@
 import {TOKYO_LAT, TOKYO_LNG, map} from './map.js';
 
 const DIGIT = 5;
-
+const MAIN_ICON_SIZE = [52, 52];
+const MAIN_ICON_ANCHOR = [26, 52];
 const inputAddress = document.querySelector('#address');
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: MAIN_ICON_SIZE,
+  iconAnchor: MAIN_ICON_ANCHOR,
 });
 
 const mainPinMarker = L.marker(
@@ -39,7 +40,7 @@ const resetMainMarker = () => {
 
 const createMainMarker = () => {
   let mainMarkerAddress;
-  mainPinMarker.on('moveend', (evt) => {
+  mainPinMarker.on('move', (evt) => {
     mainMarkerAddress = evt.target.getLatLng();
     inputAddress.value = `${mainMarkerAddress.lat.toFixed(DIGIT)}, ${mainMarkerAddress.lng.toFixed(DIGIT)}`;
   });

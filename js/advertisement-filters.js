@@ -1,5 +1,8 @@
 import {mapFilters} from './state-of-form.js';
 
+const LOW_PRICE = 10000;
+const MIDDLE_PRICE = 50000;
+
 const filtersSelects = mapFilters.querySelectorAll('select');
 const filterInputs = mapFilters.querySelectorAll('input');
 
@@ -22,62 +25,91 @@ const getSelectsObj = () => {
     const value = select.value;
     if (value !== 'any') {
       selectsObj[name] = value;
+    } else if (value === 'any') {
+      selectsObj[name] = 'any';
     }
   });
   return selectsObj;
 };
 
-const getRank = (advertisement) => {
+const getFilterAdvertisement = (advertisement) => {
   const featureList = getFeaturesArray();
   const selectList = getSelectsObj();
-  let rank = 0;
+  let filterChecker = false;
   const advertisementFeatures = advertisement.offer.features;
-  if (advertisementFeatures !== undefined) {
-    advertisementFeatures.forEach((item) => {
-      if (featureList.includes(item)) {
-        rank++;
-      }
-    });
+
+  switch (selectList['housing-type']) {
+    case advertisement.offer.type:
+      filterChecker = true;
+      break;
+    case 'any':
+      filterChecker = true;
+      break;
+    default:
+      return filterChecker;
   }
 
-  if (selectList['housing-type'] === advertisement.offer.type) {
-    rank = rank + 10;
-  }
   if (+selectList['housing-rooms'] === advertisement.offer.rooms) {
-    rank = rank + 10;
+    filterChecker = true;
+  } else if (selectList['housing-rooms'] === 'any') {
+    filterChecker = true;
+  } else {
+    filterChecker = false;
+    return filterChecker;
   }
+
   if (+selectList['housing-guests'] === advertisement.offer.guests) {
-    rank = rank + 10;
+    filterChecker = true;
+  } else if (selectList['housing-guests'] === 'any') {
+    filterChecker = true;
+  } else {
+    filterChecker = false;
+    return filterChecker;
   }
-  const lowPrice = 10000;
-  const middlePrice = 50000;
+
+  if (advertisementFeatures !== undefined && featureList.length !== 0) {
+    for (let i = featureList.length - 1; i >= 0; i--) {
+      if (advertisementFeatures.includes(featureList[i])){
+        filterChecker = true;
+      } else {
+        filterChecker = false;
+        return filterChecker;
+      }
+    }
+  } else if (advertisementFeatures === undefined && featureList.length !== 0) {
+    filterChecker = false;
+    return filterChecker;
+  }
 
   switch (selectList['housing-price']){
     case 'low':
-      if (+advertisement.offer.price <= lowPrice) {
-        rank = rank + 10;
+      if (+advertisement.offer.price <= LOW_PRICE) {
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     case 'middle':
-      if (+advertisement.offer.price >= lowPrice && +advertisement.offer.price <= middlePrice) {
-        rank = rank + 10;
+      if (+advertisement.offer.price >= LOW_PRICE && +advertisement.offer.price <= MIDDLE_PRICE) {
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     case 'high':
-      if (+advertisement.offer.price >= middlePrice) {
-        rank = rank + 10;
+      if (+advertisement.offer.price >= MIDDLE_PRICE) {
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     default:
-      break;
+      filterChecker = true;
+      return filterChecker;
   }
-  return rank;
-};
-
-const compareAdvertisements = (advertisementA, advertisementB) => {
-  const rankA = getRank(advertisementA);
-  const rankB = getRank(advertisementB);
-  return rankB - rankA;
 };
 
 const filterStateHandler = (cb) => {
@@ -86,4 +118,4 @@ const filterStateHandler = (cb) => {
   });
 };
 
-export {compareAdvertisements, filterStateHandler};
+export {getFilterAdvertisement, filterStateHandler};
