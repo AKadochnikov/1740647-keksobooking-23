@@ -36,4 +36,4 @@ const synchronizeTypePrice = (item) => item.addEventListener('change', () => {
 });
 changePriceMinPlaceholder(FLAT_MIN_PRICE);
 synchronizeTypePrice(typeOfHousing);
-export {price};
+export {price, changePriceMinPlaceholder, FLAT_MIN_PRICE};

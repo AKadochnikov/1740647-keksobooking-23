@@ -1,12 +1,12 @@
 import {FILE_TYPES} from './avatar.js';
 
-const imagesFileChooser = document.querySelector('#images');
+const photoFile = document.querySelector('#images');
 const photoImages = document.querySelector('.ad-form__photo');
 
 const previewPhoto = () => {
-  imagesFileChooser.addEventListener('change', () => {
+  photoFile.addEventListener('change', () => {
     photoImages.innerHTML = '';
-    for (const image of imagesFileChooser.files) {
+    for (const image of photoFile.files) {
       const fileName = image.name.toLowerCase();
       const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
       if (matches) {
@@ -33,3 +33,5 @@ const previewPhoto = () => {
   });
 };
 previewPhoto();
+
+export {photoImages};

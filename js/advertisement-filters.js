@@ -1,5 +1,8 @@
 import {mapFilters} from './state-of-form.js';
 
+const LOW_PRICE = 10000;
+const MIDDLE_PRICE = 50000;
+
 const filtersSelects = mapFilters.querySelectorAll('select');
 const filterInputs = mapFilters.querySelectorAll('input');
 
@@ -28,20 +31,6 @@ const getSelectsObj = () => {
   });
   return selectsObj;
 };
-/*
-const getRank = (advertisement) => {
-  const featureList = getFeaturesArray();
-  let rank = 0;
-  const advertisementFeatures = advertisement.offer.features;
-  if (advertisementFeatures !== undefined) {
-    advertisementFeatures.forEach((item) => {
-      if (featureList.includes(item)) {
-        rank++;
-      }
-    });
-  }
-  return rank;
-};*/
 
 const getFilterAdvertisement = (advertisement) => {
   const featureList = getFeaturesArray();
@@ -79,30 +68,22 @@ const getFilterAdvertisement = (advertisement) => {
   }
 
   if (advertisementFeatures !== undefined && featureList.length !== 0) {
-    featureList.forEach((item) => {
-      if (advertisementFeatures.includes(item)) {
+    for (let i = featureList.length - 1; i >= 0; i--) {
+      if (advertisementFeatures.includes(featureList[i])){
         filterChecker = true;
       } else {
         filterChecker = false;
         return filterChecker;
       }
-    });
-    if (filterChecker === false) {
-      return filterChecker;
     }
-  } else if (advertisementFeatures === undefined && featureList.length !== 0){
+  } else if (advertisementFeatures === undefined && featureList.length !== 0) {
     filterChecker = false;
     return filterChecker;
-  } else {
-    filterChecker = true;
   }
-
-  const lowPrice = 10000;
-  const middlePrice = 50000;
 
   switch (selectList['housing-price']){
     case 'low':
-      if (+advertisement.offer.price <= lowPrice) {
+      if (+advertisement.offer.price <= LOW_PRICE) {
         filterChecker = true;
         return filterChecker;
       } else {
@@ -110,7 +91,7 @@ const getFilterAdvertisement = (advertisement) => {
         return filterChecker;
       }
     case 'middle':
-      if (+advertisement.offer.price >= lowPrice && +advertisement.offer.price <= middlePrice) {
+      if (+advertisement.offer.price >= LOW_PRICE && +advertisement.offer.price <= MIDDLE_PRICE) {
         filterChecker = true;
         return filterChecker;
       } else {
@@ -118,7 +99,7 @@ const getFilterAdvertisement = (advertisement) => {
         return filterChecker;
       }
     case 'high':
-      if (+advertisement.offer.price >= middlePrice) {
+      if (+advertisement.offer.price >= MIDDLE_PRICE) {
         filterChecker = true;
         return filterChecker;
       } else {
@@ -130,17 +111,11 @@ const getFilterAdvertisement = (advertisement) => {
       return filterChecker;
   }
 };
-/*
-const compareAdvertisements = (advertisementA, advertisementB) => {
-  const rankA = getRank(advertisementA);
-  const rankB = getRank(advertisementB);
-  return rankB - rankA;
-};
-*/
+
 const filterStateHandler = (cb) => {
   mapFilters.addEventListener('change', () => {
     cb();
   });
 };
 
-export {getFilterAdvertisement, /*compareAdvertisements,*/ filterStateHandler};
+export {getFilterAdvertisement, filterStateHandler};

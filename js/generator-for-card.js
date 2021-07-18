@@ -40,6 +40,7 @@ const getFeatureCollection = (features) => {
   } else {
     featureListElement.querySelectorAll('.popup__feature')
       .forEach((item) => item.remove());
+    featureListElement.classList.add('hidden');
   }
   return featureListElement;
 };
@@ -100,7 +101,6 @@ const getGeneratedCard = (advertisement) => {
   checkContent(popupTextCapacity);
   checkContent(popupTextTime);
   checkContent(popupDescription);
-  checkContent(popupFeatures);
   return advertisementElement;
 };
 
