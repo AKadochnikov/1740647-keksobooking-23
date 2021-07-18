@@ -39,7 +39,7 @@ const resetMainMarker = () => {
 
 const createMainMarker = () => {
   let mainMarkerAddress;
-  mainPinMarker.on('moveend', (evt) => {
+  mainPinMarker.on('move', (evt) => {
     mainMarkerAddress = evt.target.getLatLng();
     inputAddress.value = `${mainMarkerAddress.lat.toFixed(DIGIT)}, ${mainMarkerAddress.lng.toFixed(DIGIT)}`;
   });

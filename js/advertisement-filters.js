@@ -22,14 +22,15 @@ const getSelectsObj = () => {
     const value = select.value;
     if (value !== 'any') {
       selectsObj[name] = value;
+    } else if (value === 'any') {
+      selectsObj[name] = 'any';
     }
   });
   return selectsObj;
 };
-
+/*
 const getRank = (advertisement) => {
   const featureList = getFeaturesArray();
-  const selectList = getSelectsObj();
   let rank = 0;
   const advertisementFeatures = advertisement.offer.features;
   if (advertisementFeatures !== undefined) {
@@ -39,51 +40,107 @@ const getRank = (advertisement) => {
       }
     });
   }
+  return rank;
+};*/
 
-  if (selectList['housing-type'] === advertisement.offer.type) {
-    rank = rank + 10;
+const getFilterAdvertisement = (advertisement) => {
+  const featureList = getFeaturesArray();
+  const selectList = getSelectsObj();
+  let filterChecker = false;
+  const advertisementFeatures = advertisement.offer.features;
+
+  switch (selectList['housing-type']) {
+    case advertisement.offer.type:
+      filterChecker = true;
+      break;
+    case 'any':
+      filterChecker = true;
+      break;
+    default:
+      return filterChecker;
   }
+
   if (+selectList['housing-rooms'] === advertisement.offer.rooms) {
-    rank = rank + 10;
+    filterChecker = true;
+  } else if (selectList['housing-rooms'] === 'any') {
+    filterChecker = true;
+  } else {
+    filterChecker = false;
+    return filterChecker;
   }
+
   if (+selectList['housing-guests'] === advertisement.offer.guests) {
-    rank = rank + 10;
+    filterChecker = true;
+  } else if (selectList['housing-guests'] === 'any') {
+    filterChecker = true;
+  } else {
+    filterChecker = false;
+    return filterChecker;
   }
+
+  if (advertisementFeatures !== undefined && featureList.length !== 0) {
+    featureList.forEach((item) => {
+      if (advertisementFeatures.includes(item)) {
+        filterChecker = true;
+      } else {
+        filterChecker = false;
+        return filterChecker;
+      }
+    });
+    if (filterChecker === false) {
+      return filterChecker;
+    }
+  } else if (advertisementFeatures === undefined && featureList.length !== 0){
+    filterChecker = false;
+    return filterChecker;
+  } else {
+    filterChecker = true;
+  }
+
   const lowPrice = 10000;
   const middlePrice = 50000;
 
   switch (selectList['housing-price']){
     case 'low':
       if (+advertisement.offer.price <= lowPrice) {
-        rank = rank + 10;
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     case 'middle':
       if (+advertisement.offer.price >= lowPrice && +advertisement.offer.price <= middlePrice) {
-        rank = rank + 10;
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     case 'high':
       if (+advertisement.offer.price >= middlePrice) {
-        rank = rank + 10;
+        filterChecker = true;
+        return filterChecker;
+      } else {
+        filterChecker = false;
+        return filterChecker;
       }
-      break;
     default:
-      break;
+      filterChecker = true;
+      return filterChecker;
   }
-  return rank;
 };
-
+/*
 const compareAdvertisements = (advertisementA, advertisementB) => {
   const rankA = getRank(advertisementA);
   const rankB = getRank(advertisementB);
   return rankB - rankA;
 };
-
+*/
 const filterStateHandler = (cb) => {
   mapFilters.addEventListener('change', () => {
     cb();
   });
 };
 
-export {compareAdvertisements, filterStateHandler};
+export {getFilterAdvertisement, /*compareAdvertisements,*/ filterStateHandler};

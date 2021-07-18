@@ -44,7 +44,7 @@ const getFeatureCollection = (features) => {
   return featureListElement;
 };
 
-const getPhotosCollection = (photos) => {
+const getPhotosCollection = (photos, container) => {
   const fragment = document.createDocumentFragment();
   if (photos) {
     photos.forEach((photo) => {
@@ -55,6 +55,8 @@ const getPhotosCollection = (photos) => {
       img.setAttribute('alt', 'Фотография жилья');
       fragment.appendChild(img);
     });
+  } else {
+    container.classList.add('hidden');
   }
   return fragment;
 };
@@ -89,7 +91,7 @@ const getGeneratedCard = (advertisement) => {
   newFeatureList.insertAdjacentElement('beforebegin', getFeatureCollection(advertisement.offer.features));
   popupDescription.textContent = advertisement.offer.description;
   photoContainer.textContent = '';
-  photoContainer.appendChild(getPhotosCollection(advertisement.offer.photos));
+  photoContainer.appendChild(getPhotosCollection(advertisement.offer.photos, photoContainer));
   popupAvatar.src = advertisement.author.avatar;
   checkContent(popupTittle);
   checkContent(popupTextAddress);
@@ -98,6 +100,7 @@ const getGeneratedCard = (advertisement) => {
   checkContent(popupTextCapacity);
   checkContent(popupTextTime);
   checkContent(popupDescription);
+  checkContent(popupFeatures);
   return advertisementElement;
 };
 

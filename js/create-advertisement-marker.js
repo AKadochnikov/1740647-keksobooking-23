@@ -1,6 +1,6 @@
 import {getGeneratedCard} from './generator-for-card.js';
 import {markerGroup} from './map.js';
-import {compareAdvertisements} from './advertisement-filters.js';
+import {getFilterAdvertisement/*, compareAdvertisements*/} from './advertisement-filters.js';
 
 const ADVERTISEMENT_LIMIT = 10;
 
@@ -8,8 +8,9 @@ const createAdvertisementMarker = (advertisements) => {
   markerGroup.clearLayers();
   advertisements
     .slice()
-    .sort(compareAdvertisements)
+    .filter(getFilterAdvertisement)
     .slice(0, ADVERTISEMENT_LIMIT)
+    /*.sort(compareAdvertisements)*/
     .forEach((advertisement) => {
       const icon = L.icon({
         iconUrl: './img/pin.svg',

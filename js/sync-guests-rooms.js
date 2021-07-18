@@ -7,7 +7,7 @@ const CAPACITY_FOR_3_GUESTS = capacity[0];
 const CAPACITY_FOR_2_GUESTS = capacity[1];
 const CAPACITY_FOR_1_GUEST = capacity[2];
 const NOT_FOR_GUESTS = capacity[3];
-
+// переписать функцию через цикл
 const setDefaultCapacity = () => {
   setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
   setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
