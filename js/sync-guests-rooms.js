@@ -1,82 +1,51 @@
 import {setAttributeDisabled, removeAttributeDisabled} from './utils/change-attribute-disabled.js';
 import {setAttributeSelected, removeAttributeSelected} from './utils/change-attribute-selected.js';
 
+const START_INDEX = 0;
+
 const rooms = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
-const CAPACITY_FOR_3_GUESTS = capacity[0];
-const CAPACITY_FOR_2_GUESTS = capacity[1];
-const CAPACITY_FOR_1_GUEST = capacity[2];
-const NOT_FOR_GUESTS = capacity[3];
-// переписать функцию через цикл
+const capacityOptions = capacity.querySelectorAll('option');
+const capacityForOneGuest = capacity.querySelector('option[value= "1"]');
+const notForGuest = capacity.querySelector('option[value= "0"]');
+
+const setAttributeDisabledAll = () => {
+  capacityOptions.forEach((item) => {
+    setAttributeDisabled(item);
+  });
+  return capacity;
+};
+
+const removeAttributeSelectedAll = () => {
+  capacityOptions.forEach((item) => {
+    removeAttributeSelected(item);
+  });
+  return capacity;
+};
+
 const setDefaultCapacity = () => {
-  setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-  setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-  setAttributeDisabled(NOT_FOR_GUESTS);
-  setAttributeSelected(CAPACITY_FOR_1_GUEST);
-  removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
-  removeAttributeSelected(CAPACITY_FOR_2_GUESTS);
-  removeAttributeSelected(CAPACITY_FOR_3_GUESTS);
-  removeAttributeSelected(NOT_FOR_GUESTS);
+  setAttributeDisabledAll();
+  removeAttributeSelectedAll();
+  setAttributeSelected(capacityForOneGuest);
+  removeAttributeDisabled(capacityForOneGuest);
 };
 
 const synchronizeRoomsCapacity = (item) => item.addEventListener('change', () => {
-  switch (rooms.value){
-    case '1':
-      setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-      setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-      setAttributeDisabled(NOT_FOR_GUESTS);
-      setAttributeSelected(CAPACITY_FOR_1_GUEST);
-      removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
-      removeAttributeSelected(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_3_GUESTS);
-      removeAttributeSelected(NOT_FOR_GUESTS);
-      break;
-    case '2':
-      setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-      setAttributeDisabled(NOT_FOR_GUESTS);
-      setAttributeSelected(CAPACITY_FOR_2_GUESTS);
-      removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
-      removeAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_3_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_1_GUEST);
-      removeAttributeSelected(NOT_FOR_GUESTS);
-      break;
-    case '3':
-      setAttributeDisabled(NOT_FOR_GUESTS);
-      setAttributeSelected(CAPACITY_FOR_3_GUESTS);
-      removeAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-      removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
-      removeAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_1_GUEST);
-      removeAttributeSelected(NOT_FOR_GUESTS);
-      break;
-    case '100':
-      setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-      setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-      setAttributeDisabled(CAPACITY_FOR_1_GUEST);
-      setAttributeSelected(NOT_FOR_GUESTS);
-      removeAttributeDisabled(NOT_FOR_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_1_GUEST);
-      removeAttributeSelected(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_3_GUESTS);
-      break;
-    default:
-      setAttributeSelected(CAPACITY_FOR_1_GUEST);
-      removeAttributeSelected(CAPACITY_FOR_2_GUESTS);
-      removeAttributeSelected(CAPACITY_FOR_3_GUESTS);
-      removeAttributeSelected(NOT_FOR_GUESTS);
-      removeAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-      removeAttributeDisabled(CAPACITY_FOR_1_GUEST);
-      removeAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-      removeAttributeDisabled(NOT_FOR_GUESTS);
-      break;
+  setAttributeDisabledAll();
+  removeAttributeSelectedAll();
+  if (+item.value === 100) {
+    removeAttributeDisabled(notForGuest);
+    setAttributeSelected(notForGuest);
+    return item;
   }
-  return item;
+  for (let i = +item.value; i > START_INDEX; i--) {
+    const selectedCapacity = capacity.querySelector(`option[value= "${item.value}"]`);
+    const currentCapacity = capacity.querySelector(`option[value= "${i}"]`);
+    removeAttributeDisabled(currentCapacity);
+    setAttributeSelected(selectedCapacity);
+  }
 });
-setAttributeDisabled(CAPACITY_FOR_3_GUESTS);
-setAttributeDisabled(CAPACITY_FOR_2_GUESTS);
-setAttributeDisabled(NOT_FOR_GUESTS);
+setDefaultCapacity();
 synchronizeRoomsCapacity(rooms);
 
 export {setDefaultCapacity};
