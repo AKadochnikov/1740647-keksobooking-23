@@ -5,6 +5,7 @@ import {createSuccessElement} from './create-success-error-elements.js';
 import {changePriceMinPlaceholder, FLAT_MIN_PRICE} from './type-of-housing.js';
 import {avatarImage} from './avatar.js';
 import {photoImages} from './photos-preview.js';
+import {createAdvertisementMarker} from './create-advertisement-marker.js';
 
 const resetButton = adForm.querySelector('.ad-form__reset');
 
@@ -28,16 +29,20 @@ const resetFormValues = () => {
   changePriceMinPlaceholder(FLAT_MIN_PRICE);
 };
 
-const submitSuccessHandler = () => {
+const submitSuccessHandler = (advertisements) => {
   createSuccessElement();
   resetFormValues();
+  createAdvertisementMarker(advertisements);
 };
 
-const resetFormHandler = () => resetButton.addEventListener('click', (evt) => {
+const resetFormHandler = (advertisements) => resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetFormValues();
+  if (advertisements) {
+    createAdvertisementMarker(advertisements);
+  }
 });
 
 resetFormHandler();
 
-export {submitSuccessHandler};
+export {submitSuccessHandler, resetFormHandler};

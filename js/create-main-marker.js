@@ -1,5 +1,7 @@
-import {TOKYO_LAT, TOKYO_LNG, map} from './map.js';
+import {map} from './map.js';
 
+const TOKYO_LAT = 35.65283;
+const TOKYO_LNG = 139.83947;
 const DIGIT = 5;
 const MAIN_ICON_SIZE = [52, 52];
 const MAIN_ICON_ANCHOR = [26, 52];
@@ -49,6 +51,5 @@ const createMainMarker = () => {
 };
 
 setDefaultAddress();
-createMainMarker();
 
-export {createMainMarker, setDefaultAddress, inputAddress, resetMainMarker, mainPinMarker};
+export {createMainMarker, setDefaultAddress, inputAddress, resetMainMarker, mainPinMarker, TOKYO_LNG, TOKYO_LAT};
