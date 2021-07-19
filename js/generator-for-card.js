@@ -1,5 +1,4 @@
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
-const POSITION_FEATURE = 7;
 
 const getNewOfferType = (type) => {
   let newType;
@@ -25,9 +24,7 @@ const getNewOfferType = (type) => {
   return newType;
 };
 
-const getFeatureCollection = (features) => {
-  const element = popupTemplate.cloneNode(true);
-  const featureListElement = element.querySelector('.popup__features');
+const getFeatureCollection = (features, featureListElement) => {
   if (features) {
     const modifiers = features.map((feature) => `popup__feature--${feature}`);
     featureListElement.querySelectorAll('.popup__feature').forEach((item) => {
@@ -87,9 +84,7 @@ const getGeneratedCard = (advertisement) => {
   popupType.textContent = getNewOfferType(advertisement.offer.type);
   popupTextCapacity.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
   popupTextTime.textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}`;
-  popupFeatures.remove();
-  const newFeatureList = advertisementElement.children[POSITION_FEATURE];
-  newFeatureList.insertAdjacentElement('beforebegin', getFeatureCollection(advertisement.offer.features));
+  getFeatureCollection(advertisement.offer.features, popupFeatures);
   popupDescription.textContent = advertisement.offer.description;
   photoContainer.textContent = '';
   photoContainer.appendChild(getPhotosCollection(advertisement.offer.photos, photoContainer));
