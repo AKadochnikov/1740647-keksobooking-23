@@ -44,4 +44,4 @@ const resetFormHandler = () => resetButton.addEventListener('click', (evt) => {
 
 resetFormHandler();
 
-export {submitSuccessHandler, resetFormHandler};
+export {submitSuccessHandler};
