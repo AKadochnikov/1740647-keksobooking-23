@@ -38,29 +38,21 @@ const getFilterAdvertisement = (advertisement) => {
   let filterChecker = false;
   const advertisementFeatures = advertisement.offer.features;
 
-  switch (selectList['housing-type']) {
-    case advertisement.offer.type:
-      filterChecker = true;
-      break;
-    case 'any':
-      filterChecker = true;
-      break;
-    default:
-      return filterChecker;
-  }
-
-  if (+selectList['housing-rooms'] === advertisement.offer.rooms) {
-    filterChecker = true;
-  } else if (selectList['housing-rooms'] === 'any') {
+  if (selectList['housing-type'] === advertisement.offer.type || selectList['housing-type'] === 'any') {
     filterChecker = true;
   } else {
     filterChecker = false;
     return filterChecker;
   }
 
-  if (+selectList['housing-guests'] === advertisement.offer.guests) {
+  if (+selectList['housing-rooms'] === advertisement.offer.rooms || selectList['housing-rooms'] === 'any') {
     filterChecker = true;
-  } else if (selectList['housing-guests'] === 'any') {
+  } else {
+    filterChecker = false;
+    return filterChecker;
+  }
+
+  if (+selectList['housing-guests'] === advertisement.offer.guests || selectList['housing-guests'] === 'any') {
     filterChecker = true;
   } else {
     filterChecker = false;

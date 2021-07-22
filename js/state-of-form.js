@@ -30,12 +30,12 @@ const activateForm = (form, itemsForm, classDisabled, mapFeatures) => {
   }
 };
 
-const setUserFormSubmit = (advertisements, onSuccess, onFail) => {
+const setUserFormSubmit = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
-      () => onSuccess(advertisements),
+      () => onSuccess(),
       () => onFail(),
       new FormData(evt.target),
     );

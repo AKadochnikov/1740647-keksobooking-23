@@ -6,6 +6,7 @@ import {changePriceMinPlaceholder, FLAT_MIN_PRICE} from './type-of-housing.js';
 import {avatarImage} from './avatar.js';
 import {photoImages} from './photos-preview.js';
 import {createAdvertisementMarker} from './create-advertisement-marker.js';
+import {arrayAdvertisements} from './map.js';
 
 const resetButton = adForm.querySelector('.ad-form__reset');
 
@@ -29,18 +30,16 @@ const resetFormValues = () => {
   changePriceMinPlaceholder(FLAT_MIN_PRICE);
 };
 
-const submitSuccessHandler = (advertisements) => {
+const submitSuccessHandler = () => {
   createSuccessElement();
   resetFormValues();
-  createAdvertisementMarker(advertisements);
+  createAdvertisementMarker(arrayAdvertisements);
 };
 
-const resetFormHandler = (advertisements) => resetButton.addEventListener('click', (evt) => {
+const resetFormHandler = () => resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetFormValues();
-  if (advertisements) {
-    createAdvertisementMarker(advertisements);
-  }
+  createAdvertisementMarker(arrayAdvertisements);
 });
 
 resetFormHandler();
