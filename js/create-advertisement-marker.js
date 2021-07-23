@@ -12,7 +12,6 @@ const getFilteredArray = (copiedArray, resultArray) => {
     booleanResult = getFilterAdvertisement(copiedArray[i]);
     if (booleanResult) {
       resultArray.push(copiedArray[i]);
-      i++;
     }
     i++;
     if (resultArray.length === ADVERTISEMENT_LIMIT) {
