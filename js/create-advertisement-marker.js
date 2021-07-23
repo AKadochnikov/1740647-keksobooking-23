@@ -10,7 +10,7 @@ const getFilteredArray = (copiedArray, resultArray) => {
   let booleanResult = false;
   for (let i = 0; i < copiedArray.length;) {
     booleanResult = getFilterAdvertisement(copiedArray[i]);
-    if (booleanResult === true) {
+    if (booleanResult) {
       resultArray.push(copiedArray[i]);
       i++;
     }

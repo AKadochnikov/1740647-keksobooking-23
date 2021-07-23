@@ -9,17 +9,17 @@ const MAP_ZOOM = 10;
 const map = L.map('map-canvas');
 const TOKYO_LAT = 35.65283;
 const TOKYO_LNG = 139.83947;
-const arrayAdvertisements = [];
+const currentAdvertisements = [];
 
 const loadMap = () => {
   map.on('load', () => {
     activateForm(adForm, formChildren, AD_FORM_CLASS_DISABLED);
     getData((advertisements) => {
       advertisements.forEach((item) => {
-        arrayAdvertisements.push(item);
+        currentAdvertisements.push(item);
       });
-      createAdvertisementMarker(arrayAdvertisements);
-      filterStateHandler(debounce(() => createAdvertisementMarker(arrayAdvertisements), DELAY_TIME));
+      createAdvertisementMarker(currentAdvertisements);
+      filterStateHandler(debounce(() => createAdvertisementMarker(currentAdvertisements), DELAY_TIME));
     }, showAlert);
   }).setView({
     lat: TOKYO_LAT,
@@ -37,4 +37,4 @@ loadMap();
 
 const markerGroup = L.layerGroup().addTo(map);
 
-export {TOKYO_LAT, TOKYO_LNG, map, markerGroup, DELAY_TIME, arrayAdvertisements};
+export {TOKYO_LAT, TOKYO_LNG, map, markerGroup, DELAY_TIME, currentAdvertisements};
